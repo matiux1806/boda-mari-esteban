@@ -3,96 +3,305 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mari & Esteban - Invitación de Boda</title>
+<title>Mari & Esteban</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --main:#c59bb3;
-  --accent:#8fb6a2;
-  --dark:#2b2b2b;
+--azul:#050b18;
+--azul2:#0c1f3f;
+--oro:#f5d27a;
+--floral:#e7c6ff;
 }
 
-*{box-sizing:border-box;font-family:'Montserrat',sans-serif;}
+*{box-sizing:border-box;font-family:'Poppins',sans-serif;}
 
 body{
-  margin:0;
-  background:linear-gradient(135deg,#fff,#f4ecf1,#eef4f1);
-  color:var(--dark);
-  text-align:center;
+margin:0;
+color:white;
+text-align:center;
+background:
+url("https://i.imgur.com/9aQZQZ4.png"),
+radial-gradient(circle at top, #1d3b66, transparent 60%),
+linear-gradient(180deg,var(--azul),var(--azul2));
+overflow-x:hidden;
 }
 
-/* ---------- PANTALLA DE INICIO ---------- */
-#startScreen{
-  position:fixed;
-  inset:0;
-  background:linear-gradient(135deg,#c59bb3,#8fb6a2);
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  color:white;
-  z-index:9999;
+section{padding:80px 20px; position:relative;}
+
+.hero{
+min-height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
 }
 
-#startScreen h1{
-  font-family:'Great Vibes',cursive;
-  font-size:3rem;
-  margin-bottom:20px;
+.frase{
+max-width:800px;
+font-style:italic;
+font-size:1.2rem;
+opacity:0;
+animation:fadeUp 2s forwards;
 }
 
-#startBtn{
-  padding:15px 30px;
-  border:none;
-  border-radius:40px;
-  font-size:1.1rem;
-  background:white;
-  color:#444;
-  cursor:pointer;
-  box-shadow:0 4px 10px rgba(0,0,0,.2);
+.names{
+font-family:'Great Vibes',cursive;
+font-size:5rem;
+color:var(--oro);
+margin:20px 0;
+opacity:0;
+animation:zoomIn 2.5s forwards 1s;
 }
 
-#startBtn:hover{transform:scale(1.05);}
-
-/* ---------- CONTENIDO ---------- */
-section{
-  padding:60px 20px;
-  max-width:800px;
-  margin:auto;
-}
-
-h2{
-  font-family:'Great Vibes',cursive;
-  font-size:3rem;
-  color:var(--main);
+.subtitle{
+letter-spacing:5px;
+opacity:0;
+animation:fadeUp 2s forwards 2s;
 }
 
 .card{
-  background:white;
-  border-radius:20px;
-  padding:25px;
-  margin:20px 0;
-  box-shadow:0 6px 15px rgba(0,0,0,.1);
+max-width:900px;
+margin:auto;
+background:rgba(255,255,255,0.08);
+border-radius:30px;
+padding:45px 25px;
+box-shadow:0 20px 50px rgba(0,0,0,.45);
+backdrop-filter:blur(8px);
+border:1px solid rgba(255,255,255,.18);
+}
+
+h2{
+font-family:'Great Vibes',cursive;
+font-size:3.2rem;
+color:var(--floral);
+}
+
+button,a.btn{
+padding:14px 30px;
+border:none;
+border-radius:999px;
+margin:8px;
+font-weight:600;
+cursor:pointer;
+background:linear-gradient(135deg,#9cc4ff,#e7c6ff);
+color:#081424;
+text-decoration:none;
+}
+
+button.secondary{background:#444;color:white;}
+
+.countdown{
+display:flex;
+gap:15px;
+justify-content:center;
+flex-wrap:wrap;
+margin-top:20px;
+}
+
+.box{
+background:rgba(255,255,255,.12);
+padding:16px 22px;
+border-radius:18px;
+min-width:95px;
+}
+
+iframe{
+width:100%;
+border:0;
+border-radius:20px;
+height:320px;
+}
+
+.music{
+position:fixed;
+bottom:20px;
+right:20px;
+z-index:10;
+}
+
+.music button{
+border-radius:50%;
+width:60px;
+height:60px;
+font-size:1.3rem;
+}
+
+footer{
+padding:50px 10px;
+color:#ddd;
+}
+
+/* 🌸 PÉTALOS */
+.petal{
+position:fixed;
+top:-50px;
+font-size:22px;
+opacity:.85;
+animation:fall linear infinite;
+pointer-events:none;
+z-index:0;
+}
+
+@keyframes fall{
+0%{transform:translateY(-50px) rotate(0deg);}
+100%{transform:translateY(110vh) rotate(360deg);}
+}
+
+/* ✨ ANIMACIONES */
+@keyframes fadeUp{
+from{opacity:0;transform:translateY(30px);}
+to{opacity:1;transform:translateY(0);}
+}
+
+@keyframes zoomIn{
+from{opacity:0;transform:scale(.7);}
+to{opacity:1;transform:scale(1);}
 }
 </style>
 </head>
 
 <body>
 
-<!-- PANTALLA DE BIENVENIDA -->
-<div id="startScreen">
-  <h1>Mari & Esteban</h1>
-  <p>Toca el botón para escuchar nuestra canción 🎶</p>
-  <button id="startBtn">💗 Entrar a la invitación</button>
-</div>
-
-<!-- AUDIO -->
+<!-- 🎶 AUDIO -->
 <audio id="musica" loop>
-  <source src="musica.mp3" type="audio/mpeg">
-  Tu navegador no soporta audio.
+<source src="musica.mp3" type="audio/mpeg">
 </audio>
 
-<!-- CONTENIDO -->
+<div class="music">
+<button onclick="toggleMusic()">🎵</button>
+</div>
+
+<!-- 🌺 PÉTALOS -->
+<script>
+for(let i=0;i<30;i++){
+let petal=document.createElement("div");
+petal.className="petal";
+petal.innerHTML="🌸";
+petal.style.left=Math.random()*100+"vw";
+petal.style.animationDuration=5+Math.random()*7+"s";
+petal.style.fontSize=16+Math.random()*20+"px";
+document.body.appendChild(petal);
+}
+</script>
+
+<!-- HERO -->
+<section class="hero">
+<p class="frase">“Dos almas, un solo corazón. Hoy comienza nuestra historia para toda la vida.”</p>
+<div class="names">Mari & Esteban</div>
+<div class="subtitle">NOS CASAMOS</div>
+</section>
+
+<!-- FECHA -->
 <section>
-  <h2>¡
+<div class="card">
+<h2>📅 Nuestra boda</h2>
+<p><strong>20 de junio de 2026 · 7:00 PM</strong></p>
+<div class="countdown" id="countdown"></div>
+</div>
+</section>
+
+<!-- UBICACIÓN -->
+<section>
+<div class="card">
+<h2>📍 Salón</h2>
+<p>Cuitláhuac 41, Arenal 2da Secc, Venustiano Carranza, CDMX</p>
+<iframe src="https://www.google.com/maps?q=Cuitláhuac%2041,%20Arenal%202da%20Secc,%20Venustiano%20Carranza,%20CDMX&output=embed"></iframe>
+<br><br>
+<a class="btn" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Cuitláhuac+41+Arenal+2da+Secc+Venustiano+Carranza+CDMX">Abrir en Maps</a>
+</div>
+</section>
+
+<!-- RSVP -->
+<section>
+<div class="card">
+<h2>💌 Confirma tu asistencia</h2>
+
+<label><strong>Número de invitados:</strong></label><br>
+<input type="number" id="guests" min="1" max="10" value="1"
+style="padding:10px;border-radius:12px;border:none;width:120px;text-align:center;">
+
+<br><br>
+<button onclick="rsvp('Sí asistiré')">💙 Asistiré</button>
+<button class="secondary" onclick="rsvp('No podré asistir')">❌ No asistiré</button>
+
+<br><br>
+<a class="btn" id="waBtn" target="_blank">📲 Confirmar por WhatsApp</a>
+<p id="rsvpMsg"></p>
+</div>
+</section>
+
+<!-- AGRADECIMIENTO -->
+<section>
+<div class="card">
+<h2>✨ Gracias</h2>
+<p>
+Gracias por ser parte de nuestra historia de amor.  
+Tu presencia hará que este día sea aún más inolvidable.  
+Nos sentimos profundamente agradecidos de compartir este momento contigo.
+</p>
+</div>
+</section>
+
+<footer>
+Con todo nuestro amor, Mari & Esteban 💍
+</footer>
+
+<script>
+// 🎶 MÚSICA
+const musica=document.getElementById("musica");
+let sonando=false;
+
+document.addEventListener("click", iniciar,{once:true});
+document.addEventListener("touchstart", iniciar,{once:true});
+
+function iniciar(){
+musica.play().then(()=>{sonando=true;}).catch(()=>{});
+}
+
+function toggleMusic(){
+if(sonando){musica.pause();sonando=false;}
+else{musica.play();sonando=true;}
+}
+
+// ⏳ CONTADOR
+const eventDate=new Date("2026-06-20T19:00:00-06:00").getTime();
+const cd=document.getElementById("countdown");
+
+setInterval(()=>{
+const now=new Date().getTime();
+const d=eventDate-now;
+if(d<0){cd.innerHTML="¡Hoy es el gran día!";return;}
+
+const days=Math.floor(d/(1000*60*60*24));
+const hrs=Math.floor((d%(1000*60*60*24))/(1000*60*60));
+const min=Math.floor((d%(1000*60*60))/(1000*60));
+const sec=Math.floor((d%(1000*60))/1000);
+
+cd.innerHTML=`
+<div class='box'><strong>${days}</strong><br>Días</div>
+<div class='box'><strong>${hrs}</strong><br>Horas</div>
+<div class='box'><strong>${min}</strong><br>Min</div>
+<div class='box'><strong>${sec}</strong><br>Seg</div>`;
+},1000);
+
+// 📲 WHATSAPP
+const phone="5210000000000"; // 👈 CAMBIA ESTE NÚMERO
+const waBtn=document.getElementById("waBtn");
+
+function rsvp(msg){
+const guests=document.getElementById("guests").value;
+document.getElementById("rsvpMsg").innerText=`Gracias por tu respuesta 💙`;
+
+const text=encodeURIComponent(
+`Hola, confirmo mi asistencia a la boda de Mari y Esteban.
+Respuesta: ${msg}
+Número de invitados: ${guests}`);
+
+waBtn.href=`https://wa.me/${phone}?text=${text}`;
+}
+</script>
+
+</body>
+</html>
