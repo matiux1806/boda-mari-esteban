@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mari & Esteban - Invitación de Boda</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
@@ -12,155 +13,86 @@
   --accent:#8fb6a2;
   --dark:#2b2b2b;
 }
+
 *{box-sizing:border-box;font-family:'Montserrat',sans-serif;}
+
 body{
   margin:0;
   background:linear-gradient(135deg,#fff,#f4ecf1,#eef4f1);
   color:var(--dark);
   text-align:center;
 }
-section{padding:70px 20px;}
-.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;}
-.names{font-family:'Great Vibes',cursive;font-size:4.5rem;color:var(--main);}
-.subtitle{letter-spacing:4px;margin-top:10px;}
-.card{max-width:850px;margin:auto;background:rgba(255,255,255,0.9);border-radius:28px;padding:45px 25px;box-shadow:0 20px 40px rgba(0,0,0,.12);}
-button,a.btn{padding:14px 28px;border:none;border-radius:999px;margin:8px;font-weight:600;cursor:pointer;background:linear-gradient(135deg,var(--main),var(--accent));color:white;text-decoration:none;}
-button.secondary{background:#777;}
-.countdown{font-size:1.3rem;margin-top:20px;display:flex;gap:15px;justify-content:center;flex-wrap:wrap;}
-.box{background:#f4ecf1;padding:15px 22px;border-radius:18px;min-width:95px;}
-iframe{width:100%;border:0;border-radius:20px;height:320px;}
-.music{position:fixed;bottom:20px;right:20px;z-index:10;}
-.music button{border-radius:50%;width:60px;height:60px;font-size:1.3rem;}
-footer{padding:40px 10px;font-size:.9rem;color:#777}
+
+/* ---------- PANTALLA DE INICIO ---------- */
+#startScreen{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(135deg,#c59bb3,#8fb6a2);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  z-index:9999;
+}
+
+#startScreen h1{
+  font-family:'Great Vibes',cursive;
+  font-size:3rem;
+  margin-bottom:20px;
+}
+
+#startBtn{
+  padding:15px 30px;
+  border:none;
+  border-radius:40px;
+  font-size:1.1rem;
+  background:white;
+  color:#444;
+  cursor:pointer;
+  box-shadow:0 4px 10px rgba(0,0,0,.2);
+}
+
+#startBtn:hover{transform:scale(1.05);}
+
+/* ---------- CONTENIDO ---------- */
+section{
+  padding:60px 20px;
+  max-width:800px;
+  margin:auto;
+}
+
+h2{
+  font-family:'Great Vibes',cursive;
+  font-size:3rem;
+  color:var(--main);
+}
+
+.card{
+  background:white;
+  border-radius:20px;
+  padding:25px;
+  margin:20px 0;
+  box-shadow:0 6px 15px rgba(0,0,0,.1);
+}
 </style>
 </head>
 
 <body>
 
-  <audio id="musica" loop>
-  <source src="musica.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-const musica = document.getElementById("musica");
-let reproduciendo = false;
-
-// Inicia música al primer toque
-function iniciarMusica() {
-  musica.play().then(() => {
-    reproduciendo = true;
-  }).catch(() => {});
-
-  document.removeEventListener("click", iniciarMusica);
-  document.removeEventListener("touchstart", iniciarMusica);
-}
-
-document.addEventListener("click", iniciarMusica);
-document.addEventListener("touchstart", iniciarMusica);
-
-// Botón 🎵
-function toggleMusic(){
-  if(reproduciendo){
-    musica.pause();
-    reproduciendo = false;
-  } else {
-    musica.play();
-    reproduciendo = true;
-  }
-}
-</script>
-
-<!-- 🎵 MUSICA -->
-<audio id="musica" preload="auto" loop>
-  <source src="musica.mp3" type="audio/mpeg">
-</audio>
-
-<script>
-const audio = document.getElementById("musica");
-let playing = false;
-
-// inicia música al primer toque
-function iniciarMusica(){
-  audio.play().then(()=> playing = true).catch(()=>{});
-  document.removeEventListener("click", iniciarMusica);
-  document.removeEventListener("touchstart", iniciarMusica);
-}
-document.addEventListener("click", iniciarMusica);
-document.addEventListener("touchstart", iniciarMusica);
-
-// botón 🎵
-function toggleMusic(){
-  if(!playing){ audio.play(); playing=true; }
-  else{ audio.pause(); playing=false; }
-}
-</script>
-
-<div class="music">
-  <button onclick="toggleMusic()">🎵</button>
+<!-- PANTALLA DE BIENVENIDA -->
+<div id="startScreen">
+  <h1>Mari & Esteban</h1>
+  <p>Toca el botón para escuchar nuestra canción 🎶</p>
+  <button id="startBtn">💗 Entrar a la invitación</button>
 </div>
 
-<section class="hero">
-  <div class="names" id="animatedText"></div>
-  <div class="subtitle">Nos casamos</div>
-</section>
+<!-- AUDIO -->
+<audio id="musica" loop>
+  <source src="musica.mp3" type="audio/mpeg">
+  Tu navegador no soporta audio.
+</audio>
 
+<!-- CONTENIDO -->
 <section>
-  <div class="card">
-    <h2>📅 Fecha</h2>
-    <p><strong>20 de junio de 2026 · 7:00 PM</strong></p>
-    <div class="countdown" id="countdown"></div>
-  </div>
-</section>
-
-<section>
-  <div class="card">
-    <h2>📍 Salón</h2>
-    <p>Cuitláhuac 41, Arenal 2da Secc, Venustiano Carranza, CDMX</p>
-    <iframe src="https://www.google.com/maps?q=Cuitláhuac%2041,%20CDMX&output=embed"></iframe>
-  </div>
-</section>
-
-<section>
-  <div class="card">
-    <h2>💌 Confirma tu asistencia</h2>
-
-    <input type="number" id="guests" min="1" max="10" value="1"><br><br>
-    <button onclick="rsvp('Sí asistiré')">🌸 Asistiré</button>
-    <button class="secondary" onclick="rsvp('No podré asistir')">❌ No asistiré</button><br><br>
-    <a class="btn" id="waBtn" target="_blank">📲 WhatsApp</a>
-    <p id="rsvpMsg"></p>
-  </div>
-</section>
-
-<footer>Con cariño, Mari & Esteban</footer>
-
-<script>
-// texto animado
-const text="Mari & Esteban";let i=0;
-const target=document.getElementById("animatedText");
-(function type(){ if(i<text.length){target.innerHTML+=text[i++];setTimeout(type,120);} })();
-
-// contador
-const eventDate=new Date("2026-06-20T19:00:00-06:00").getTime();
-setInterval(()=>{
-const d=eventDate-new Date().getTime();
-if(d<0)return;
-document.getElementById("countdown").innerHTML=
-`<div class='box'>${Math.floor(d/86400000)}<br>Días</div>
-<div class='box'>${Math.floor(d/3600000)%24}<br>Horas</div>
-<div class='box'>${Math.floor(d/60000)%60}<br>Min</div>
-<div class='box'>${Math.floor(d/1000)%60}<br>Seg</div>`;
-},1000);
-
-// WhatsApp
-const phone="52TU_NUMERO_AQUI";
-function rsvp(msg){
-const g=document.getElementById("guests").value;
-document.getElementById("rsvpMsg").innerText=`Gracias. Invitados: ${g}`;
-document.getElementById("waBtn").href=
-`https://wa.me/${phone}?text=${encodeURIComponent("Confirmo: "+msg+" | Invitados: "+g)}`;
-}
-</script>
-
-</body>
-</html>
+  <h2>¡
