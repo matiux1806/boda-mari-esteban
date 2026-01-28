@@ -64,13 +64,16 @@ footer{padding:40px 10px;font-size:.9rem;color:#777}
 </style>
 </head>
 <body>
-<p style="text-align:center;opacity:.7;margin-top:15px;">
-✨ Toca la pantalla para escuchar nuestra canción ✨
-</p>
-<audio id="musica" loop>
-  <!-- Cambia el src si subes el archivo a un hosting o lo colocas junto a este HTML -->
-  <source src="music-mp3" type="audio/mpeg">
+<audio id="musica" preload="auto" loop>
+  <source src="musica.mp3" type="audio/mpeg">
 </audio>
+
+<script>
+document.addEventListener('click', function () {
+  const audio = document.getElementById('musica');
+  audio.play().catch(err => console.log(err));
+}, { once: true });
+</script>
 
 <div class="music">
   <button onclick="toggleMusic()">🎵</button>
