@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mari & Esteban - Invitación de Boda</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --main:#c59bb3;      /* floral rosado */
+  --accent:#8fb6a2;    /* verde suave */
+  --dark:#2b2b2b;
+}
+*{box-sizing:border-box;font-family:'Montserrat',sans-serif;}
+body{
+  margin:0;
+  background:linear-gradient(135deg,#fff,#f4ecf1,#eef4f1);
+  color:var(--dark);
+  text-align:center;
+}
+section{padding:70px 20px;}
+.hero{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+.names{
+  font-family:'Great Vibes',cursive;
+  font-size:4.5rem;
+  color:var(--main);
+  animation:fadeUp 2s ease forwards;
+}
+.subtitle{letter-spacing:4px;margin-top:10px;animation:fadeUp 2.8s ease forwards;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+.card{
+  max-width:850px;
+  margin:auto;
+  background:rgba(255,255,255,0.9);
+  border-radius:28px;
+  padding:45px 25px;
+  box-shadow:0 20px 40px rgba(0,0,0,.12);
+  backdrop-filter:blur(6px);
+}
+button,a.btn{
+  padding:14px 28px;
+  border:none;
+  border-radius:999px;
+  margin:8px;
+  font-weight:600;
+  cursor:pointer;
+  background:linear-gradient(135deg,var(--main),var(--accent));
+  color:white;
+  text-decoration:none;
+}
+button.secondary{background:#777;}
+.countdown{font-size:1.3rem;margin-top:20px;display:flex;gap:15px;justify-content:center;flex-wrap:wrap;}
+.box{background:#f4ecf1;padding:15px 22px;border-radius:18px;min-width:95px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.05)}
+iframe{width:100%;border:0;border-radius:20px;height:320px;}
+.music{position:fixed;bottom:20px;right:20px;z-index:10;}
+.music button{border-radius:50%;width:60px;height:60px;font-size:1.3rem;}
+footer{padding:40px 10px;font-size:.9rem;color:#777}
+</style>
+</head>
+<body>
+
+<audio id="bgm" loop>
+  <!-- Cambia el src si subes el archivo a un hosting o lo colocas junto a este HTML -->
+  <source src="Ed Sheeran - Perfect Symphony [with Andrea Bocelli] (Official Music Video).mp3" type="audio/mpeg">
+</audio>
+
+<div class="music">
+  <button onclick="toggleMusic()">🎵</button>
+</div>
+
+<section class="hero">
+  <div class="names" id="animatedText"></div>
+  <div class="subtitle">Nos casamos</div>
+</section>
+
+<section>
+  <div class="card">
+    <h2>📅 Fecha</h2>
+    <p><strong>20 de junio de 2026 · 7:00 PM</strong></p>
+    <div class="countdown" id="countdown"></div>
+    <a class="btn" target="_blank" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Boda%20Mari%20y%20Esteban&dates=20260621T000000Z/20260621T040000Z">Agregar al calendario</a>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <h2>📍 Salón de fiestas</h2>
+    <p>Cuitláhuac 41, Arenal 2da Secc, Venustiano Carranza, 15680 CDMX</p>
+    <iframe src="https://www.google.com/maps?q=Cuitláhuac%2041,%20Arenal%202da%20Secc,%20Venustiano%20Carranza,%2015680%20Ciudad%20de%20México,%20CDMX&output=embed"></iframe>
+    <br><br>
+    <a class="btn" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Cuitláhuac+41+Arenal+2da+Secc+Venustiano+Carranza+15680+CDMX">Abrir en Maps</a>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <h2>💌 Confirma tu asistencia</h2>
+    <p>Por favor indícanos si podrás acompañarnos</p>
+
+    <label><strong>Número de invitados:</strong></label><br>
+    <input type="number" id="guests" min="1" max="10" value="1" style="padding:10px;border-radius:12px;border:1px solid #ccc;width:120px;text-align:center;font-size:1rem;">
+
+    <br><br>
+    <button onclick="rsvp('Sí asistiré')">🌸 Asistiré</button>
+    <button class="secondary" onclick="rsvp('No podré asistir')">❌ No asistiré</button>
+    <br><br>
+    <a class="btn" id="waBtn" target="_blank">📲 Confirmar por WhatsApp</a>
+    <p id="rsvpMsg"></p>
+  </div>
+</section>
+
+<section>
+  <div class="card">
+    <h2>📱 Escanea para ver la invitación</h2>
+    <p>Comparte este código QR con tus invitados</p>
+    <img id="qr" alt="Código QR" style="width:220px;border-radius:20px;box-shadow:0 10px 25px rgba(0,0,0,.15)"><br><br>
+    <small>Este QR apunta al enlace de tu invitación (cuando la subas a internet).</small>
+  </div>
+</section>
+
+<footer>
+  Con cariño, Mari & Esteban
+</footer>
+
+<script>
+// Texto animado letra por letra
+const text = "Mari & Esteban";
+let i = 0;
+const target = document.getElementById('animatedText');
+function type(){
+  if(i < text.length){
+    target.innerHTML += text.charAt(i);
+    i++;
+    setTimeout(type,120);
+  }
+}
+type();
+
+// Contador
+const eventDate = new Date("2026-06-20T19:00:00-06:00").getTime();
+const cd = document.getElementById('countdown');
+setInterval(()=>{
+  const now = new Date().getTime();
+  const d = eventDate - now;
+  if(d < 0){ cd.innerHTML = "¡Hoy es el gran día!"; return; }
+  const days = Math.floor(d/(1000*60*60*24));
+  const hrs = Math.floor((d%(1000*60*60*24))/(1000*60*60));
+  const min = Math.floor((d%(1000*60*60))/(1000*60));
+  const sec = Math.floor((d%(1000*60))/1000);
+  cd.innerHTML = `
+    <div class='box'><strong>${days}</strong><br>Días</div>
+    <div class='box'><strong>${hrs}</strong><br>Horas</div>
+    <div class='box'><strong>${min}</strong><br>Min</div>
+    <div class='box'><strong>${sec}</strong><br>Seg</div>`;
+},1000);
+
+// RSVP
+const phone = "5210000000000"; // 👈 CAMBIA este número (incluye 52 + tu número)
+const waBtn = document.getElementById('waBtn');
+function updateWA(msg){
+  const guests = document.getElementById('guests').value;
+  const text = encodeURIComponent(`Hola, confirmo mi asistencia a la boda de Mari y Esteban.
+Respuesta: ${msg}
+Número de invitados: ${guests}`);
+  waBtn.href = `https://wa.me/${phone}?text=${text}`;
+}{
+  const text = encodeURIComponent("Hola, confirmo mi asistencia a la boda de Mari y Esteban: " + msg);
+  waBtn.href = `https://wa.me/${phone}?text=${text}`;
+}
+function rsvp(msg){
+  const guests = document.getElementById('guests').value;
+  document.getElementById('rsvpMsg').innerText = `Gracias por tu respuesta: ${msg}. Invitados: ${guests}`;
+  updateWA(msg);
+}
+
+// Música
+let playing=false;
+const music=document.getElementById('bgm');
+function toggleMusic(){
+  if(!playing){music.play();playing=true;}else{music.pause();playing=false;}
+}
+
+// QR CODE (cambia este enlace cuando subas tu invitación)
+const invitationURL = "https://tusitio.com/invitacion.html"; // 👈 CAMBIA ESTE LINK
+const qr = document.getElementById('qr');
+qr.src = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(invitationURL)}`;
+
+</script>
+</body>
+</html>
