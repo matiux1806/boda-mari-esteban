@@ -37,6 +37,39 @@ footer{padding:40px 10px;font-size:.9rem;color:#777}
 
 <body>
 
+  <audio id="musica" loop>
+  <source src="musica.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const musica = document.getElementById("musica");
+let reproduciendo = false;
+
+// Inicia música al primer toque
+function iniciarMusica() {
+  musica.play().then(() => {
+    reproduciendo = true;
+  }).catch(() => {});
+
+  document.removeEventListener("click", iniciarMusica);
+  document.removeEventListener("touchstart", iniciarMusica);
+}
+
+document.addEventListener("click", iniciarMusica);
+document.addEventListener("touchstart", iniciarMusica);
+
+// Botón 🎵
+function toggleMusic(){
+  if(reproduciendo){
+    musica.pause();
+    reproduciendo = false;
+  } else {
+    musica.play();
+    reproduciendo = true;
+  }
+}
+</script>
+
 <!-- 🎵 MUSICA -->
 <audio id="musica" preload="auto" loop>
   <source src="musica.mp3" type="audio/mpeg">
